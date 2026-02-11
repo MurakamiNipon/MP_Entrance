@@ -12,11 +12,14 @@
     --radius: 12px;
     --sidebar-width: 280px;
 }
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Sarabun', sans-serif; background-color: var(--accent-bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: row; }
+
 .mobile-nav { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 60px; background: var(--white); box-shadow: var(--shadow-sm); z-index: 1000; padding: 0 1rem; align-items: center; justify-content: space-between; }
 .mobile-menu-btn { font-size: 1.5rem; color: var(--primary-color); cursor: pointer; background: none; border: none; padding: 5px; }
 .mobile-logo { height: 40px; }
+
 .sidebar { width: var(--sidebar-width); background: var(--white); height: 100vh; position: fixed; left: 0; top: 0; padding: 2rem 1.5rem; display: flex; flex-direction: column; box-shadow: 2px 0 20px rgba(0,0,0,0.05); z-index: 1100; transition: transform 0.3s ease-in-out; }
 .logo-container { text-align: center; margin-bottom: 2rem; }
 .logo { max-width: 180px; height: auto; margin-bottom: 1rem; }
@@ -27,7 +30,8 @@ body { font-family: 'Sarabun', sans-serif; background-color: var(--accent-bg); c
 .user-info { display: flex; flex-direction: column; overflow: hidden; }
 .user-label { font-size: 0.75rem; color: var(--text-muted); }
 #userEmailText { font-weight: 600; font-size: 0.9rem; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.logout-btn-wrapper { margin-bottom: auto; }
+
+.logout-btn-wrapper { margin-top: 0; width: 100%; } 
 .logout-btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 12px; border: 1px solid var(--danger); color: var(--danger); border-radius: var(--radius); text-decoration: none; font-weight: 600; transition: all 0.3s ease; background: var(--white); cursor: pointer; }
 .logout-btn:hover { background: var(--danger); color: var(--white); transform: translateY(-2px); }
 
@@ -45,12 +49,13 @@ header h1 { font-size: 1.8rem; color: var(--text-main); margin-bottom: 0.5rem; f
 .card-title { font-size: 1rem; font-weight: 600; color: var(--text-main); line-height: 1.5; }
 .card-desc { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem; }
 footer { margin-top: 3rem; text-align: center; font-size: 0.85rem; color: #aaa; padding-bottom: 1rem; }
+
 .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1050; }
 
 @media (max-width: 992px) {
     body { flex-direction: column; }
     .mobile-nav { display: flex; }
-    .sidebar { transform: translateX(-100%); width: 260px; }
+    .sidebar { transform: translateX(-100%); width: 260px; overflow-y: auto; } 
     .sidebar.active { transform: translateX(0); }
     .sidebar-overlay.active { display: block; }
     .main-content { margin-left: 0; padding: 1.5rem; margin-top: 60px; }
