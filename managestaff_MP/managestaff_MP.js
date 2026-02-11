@@ -1,5 +1,5 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, doc, setDoc, getDocs, deleteDoc, getDoc } 
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, doc, setDoc, getDocs, deleteDoc } 
         from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
@@ -15,52 +15,25 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const COLLECTION_NAME = "staff";
+        let currentStaffList = [];
 
         async function loadData() {
-            const tableBody = document.getElementById('tableBody');
             const emptyState = document.getElementById('emptyState');
             const emptyMsg = document.getElementById('emptyMsg');
-            const countBadge = document.getElementById('countBadge');
 
-            tableBody.innerHTML = '';
-            
             try {
                 const querySnapshot = await getDocs(collection(db, COLLECTION_NAME));
-                let list = [];
+                currentStaffList = [];
 
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
                     if (data.role === 'Instructor' && 
                         data.major && data.major.includes('MP')) {
-                        list.push(data);
+                        currentStaffList.push(data);
                     }
                 });
 
-                list.sort((a, b) => a.name.localeCompare(b.name));
-                countBadge.innerText = `${list.length} ท่าน`;
-
-                if (list.length > 0) {
-                    emptyState.style.display = 'none';
-                    list.forEach(item => {
-                        const tr = document.createElement('tr');
-                        tr.innerHTML = `
-                            <td><strong>${item.name} ${item.surname}</strong></td>
-                            <td>${item.email}</td>
-                            <td style="color:#888;">${item.password}</td>
-                            <td><span class="badge-role">MP</span></td>
-                            <td>
-                                <button class="btn-del" onclick="window.deleteItem('${item.email}', '${item.name}')">
-                                    ลบ
-                                </button>
-                            </td>
-                        `;
-                        tableBody.appendChild(tr);
-                    });
-                } else {
-                    emptyState.style.display = 'block';
-                    emptyMsg.innerText = "ยังไม่มีข้อมูลอาจารย์";
-                    emptyMsg.previousElementSibling.className = "fas fa-folder-open";
-                }
+                renderTable();
 
             } catch (error) {
                 console.error("Load Error:", error);
@@ -72,6 +45,41 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
                 } else {
                     emptyMsg.innerText = "เกิดข้อผิดพลาด: " + error.message;
                 }
+            }
+        }
+
+        function renderTable() {
+            const tableBody = document.getElementById('tableBody');
+            const emptyState = document.getElementById('emptyState');
+            const emptyMsg = document.getElementById('emptyMsg');
+            const countBadge = document.getElementById('countBadge');
+
+            tableBody.innerHTML = '';
+            
+            currentStaffList.sort((a, b) => a.name.localeCompare(b.name));
+            countBadge.innerText = `${currentStaffList.length} ท่าน`;
+
+            if (currentStaffList.length > 0) {
+                emptyState.style.display = 'none';
+                currentStaffList.forEach(item => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong>${item.name} ${item.surname}</strong></td>
+                        <td>${item.email}</td>
+                        <td style="color:#888;">${item.password}</td>
+                        <td><span class="badge-role">MP</span></td>
+                        <td>
+                            <button class="btn-del" onclick="window.deleteItem('${item.email}', '${item.name}')">
+                                ลบ
+                            </button>
+                        </td>
+                    `;
+                    tableBody.appendChild(tr);
+                });
+            } else {
+                emptyState.style.display = 'block';
+                emptyMsg.innerText = "ยังไม่มีข้อมูลอาจารย์";
+                emptyMsg.previousElementSibling.className = "fas fa-folder-open";
             }
         }
 
@@ -88,7 +96,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
             if(!name || !surname || !email || !pass) return;
 
             btn.disabled = true;
-            btn.innerHTML = 'กำลังบันทึก...';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังบันทึก...';
 
             try {
                 const docRef = doc(db, COLLECTION_NAME, email);
@@ -103,6 +111,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
                     role: 'Instructor'
                 };
 
+                // บันทึกลงฐานข้อมูล
                 await setDoc(docRef, payload);
                 
                 Swal.fire({
@@ -112,7 +121,14 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
                     showConfirmButton: false
                 });
                 document.getElementById('staffForm').reset();
-                loadData();
+                
+                const existingIndex = currentStaffList.findIndex(s => s.email === email);
+                if (existingIndex !== -1) {
+                    currentStaffList[existingIndex] = payload;
+                } else {
+                    currentStaffList.push(payload);
+                }
+                renderTable();
 
             } catch (error) {
                 Swal.fire({ icon: 'error', title: 'Error', text: error.message });
@@ -135,11 +151,16 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
             if (result.isConfirmed) {
                 try {
                     await deleteDoc(doc(db, COLLECTION_NAME, email));
-                    loadData();
+                    
                     Swal.fire({ icon: 'success', title: 'ลบแล้ว', timer: 1000, showConfirmButton: false });
+                    
+                    currentStaffList = currentStaffList.filter(s => s.email !== email);
+                    renderTable();
+
                 } catch (e) {
                     Swal.fire('Error', e.message, 'error');
                 }
             }
         }
+        
         loadData();
