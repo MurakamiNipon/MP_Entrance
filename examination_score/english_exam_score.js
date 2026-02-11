@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, setDoc, doc, getDocs, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, collection, setDoc, doc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyD5X264Dqy9QuLqcUagBFD-Y6LdxTnQaJ8",
@@ -51,6 +51,11 @@ document.getElementById('studentSelect').addEventListener('change', function(e) 
         document.getElementById('stdUni').value = student.university;
         document.getElementById('stdMajor').value = student.major;
         document.getElementById('stdNameHidden').value = student.name; 
+    } else {
+        document.getElementById('stdOrder').value = "";
+        document.getElementById('stdUni').value = "";
+        document.getElementById('stdMajor').value = "";
+        document.getElementById('stdNameHidden').value = "";
     }
 });
 
@@ -72,10 +77,24 @@ function calculateFormTotal() {
     document.getElementById('displayTotal').innerText = total.toFixed(2);
 }
 
+document.getElementById('btnClear').addEventListener('click', () => {
+    document.getElementById('scoreForm').reset();
+    document.getElementById('displayTotal').innerText = "0.00";
+});
+
 document.getElementById('scoreForm').addEventListener('submit', async (e) => {
     e.preventDefault();
+    const studentId = document.getElementById('studentSelect').value;
     const studentName = document.getElementById('stdNameHidden').value;
-    if(!studentName) return;
+    
+    if(!studentName) {
+        Swal.fire({ icon: 'warning', title: 'กรุณาเลือกผู้เข้าสอบ' });
+        return;
+    }
+
+    const btn = document.getElementById('btnSave');
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+    btn.disabled = true;
 
     let reading = parseFloat(document.getElementById('readingScore').value) || 0;
     let writing = parseFloat(document.getElementById('writingScore').value) || 0;
@@ -83,7 +102,7 @@ document.getElementById('scoreForm').addEventListener('submit', async (e) => {
 
     try {
         await setDoc(doc(db, COLLECTION_NAME, studentName), {
-            studentId: document.getElementById('studentSelect').value,
+            studentId: studentId,
             name: studentName,
             university: document.getElementById('stdUni').value,
             major: document.getElementById('stdMajor').value,
@@ -91,11 +110,26 @@ document.getElementById('scoreForm').addEventListener('submit', async (e) => {
             total: totalScore,
             timestamp: serverTimestamp()
         });
-        Swal.fire({ icon: 'success', title: 'บันทึกสำเร็จ' });
+        
+        Swal.fire({ icon: 'success', title: 'บันทึกสำเร็จ', timer: 1500, showConfirmButton: false });
+        
+        const selectEl = document.getElementById('studentSelect');
+        const selectedOption = selectEl.querySelector(`option[value="${studentId}"]`);
+        if (selectedOption) {
+            selectedOption.style.color = '#c62828';
+            selectedOption.style.fontWeight = 'bold';
+        }
+
         document.getElementById('scoreForm').reset();
         document.getElementById('displayTotal').innerText = "0.00";
-        loadStudents();
-    } catch (error) { console.error(error); }
+
+    } catch (error) { 
+        console.error(error); 
+        Swal.fire({ icon: 'error', title: 'เกิดข้อผิดพลาด', text: error.message });
+    } finally {
+        btn.innerHTML = '<i class="fas fa-save"></i> บันทึกข้อมูล (Save)';
+        btn.disabled = false;
+    }
 });
 
 loadStudents();
