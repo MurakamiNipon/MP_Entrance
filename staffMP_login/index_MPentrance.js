@@ -1,4 +1,4 @@
-        const firebaseConfig = {
+const firebaseConfig = {
             apiKey: "AIzaSyD5X264Dqy9QuLqcUagBFD-Y6LdxTnQaJ8",
             authDomain: "mp-entrance.firebaseapp.com",
             projectId: "mp-entrance",
@@ -19,6 +19,8 @@
             sidebar.classList.toggle('active');
             overlay.classList.toggle('active');
         }
+        // นำฟังก์ชันออกสู่ Global Scope เพื่อให้ HTML (onclick) เรียกใช้ได้
+        window.toggleSidebar = toggleSidebar;
 
         function checkAuth() {
             let userEmail = localStorage.getItem('staffEmail');
