@@ -19,7 +19,7 @@ const firebaseConfig = {
             sidebar.classList.toggle('active');
             overlay.classList.toggle('active');
         }
-        // นำฟังก์ชันออกสู่ Global Scope เพื่อให้ HTML (onclick) เรียกใช้ได้
+        
         window.toggleSidebar = toggleSidebar;
 
         function checkAuth() {
@@ -48,6 +48,12 @@ const firebaseConfig = {
 
         document.getElementById('logoutBtn').addEventListener('click', function(e) {
             e.preventDefault();
+            
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+
             Swal.fire({
                 title: 'ยืนยันการออกจากระบบ?',
                 text: "คุณต้องการออกจากระบบใช่หรือไม่",
