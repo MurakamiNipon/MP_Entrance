@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Login</title>
+    <link rel="icon" type="image/png" href="./Img/Icon_logo.png"> 
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="index_fx.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="logo-section">
+            <img src="./Img/logo_PSCM.png" alt="CRA PSCM Logo" onerror="this.style.display='none'"> 
+            <h2 id="pageTitle">Medical Physics Staff</h2>
+        </div>
+
+        <div id="loginForm">
+            <form id="formStudentLogin">
+                <div class="form-group">
+                    <label>อีเมล (Email)</label>
+                    <input type="email" id="student_email" placeholder="กรอกอีเมล" required>
+                </div>
+                <div class="form-group">
+                    <label>รหัสผ่าน (Password)</label>
+                    <input type="password" id="student_password" placeholder="กรอกรหัสผ่าน" required>
+                </div>
+                <button type="submit" class="btn" id="btnLogin">เข้าสู่ระบบ</button>
+            </form>
+            
+            <div class="toggle-link">
+                ต้องการเปลี่ยนรหัสผ่าน? <a onclick="toggleForms()">คลิกที่นี่</a>
+            </div>
+        </div>
+
+        <div id="changePasswordForm" class="hidden">
+            <h3 style="color: var(--cra-blue); margin-bottom: 1.5rem; font-size: 1.2rem;">เปลี่ยนรหัสผ่านใหม่</h3>
+            <form id="formChangePass">
+                <div class="form-group">
+                    <label>อีเมล (Email)</label>
+                    <input type="email" id="change_email" placeholder="ยืนยันอีเมลของคุณ" required>
+                </div>
+                <div class="form-group">
+                    <label>รหัสผ่านเดิม</label>
+                    <input type="password" id="old_password" placeholder="รหัสผ่านปัจจุบัน" required>
+                </div>
+                <div class="form-group">
+                    <label>รหัสผ่านใหม่</label>
+                    <input type="password" id="new_password" placeholder="ตั้งรหัสผ่านใหม่" required>
+                </div>
+                <div class="form-group">
+                    <label>ยืนยันรหัสผ่านใหม่</label>
+                    <input type="password" id="confirm_password" placeholder="กรอกรหัสผ่านใหม่อีกครั้ง" required>
+                </div>
+                <button type="submit" class="btn btn-orange" id="btnChangePass">บันทึกรหัสผ่านใหม่</button>
+            </form>
+            <div class="toggle-link">
+                <a onclick="toggleForms()">กลับไปหน้าเข้าสู่ระบบ</a>
+            </div>
+        </div>
+        
+        <div class="footer-credit">© Princess Srisavangavadhana Faculty of Medicine</div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script type="module" src="index_fx.js"></script>
+        
+    </script>
+</body>
+</html>

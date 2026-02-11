@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Written Exam Score</title>
+    <link rel="icon" type="image/png" href="../Img/Icon_logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="written_exam_score.css">
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="brand">
+            <img src="../Img/Icon_logo.png" alt="Logo" onerror="this.style.display='none'">
+            <div class="brand-text">
+                <h1>Written Exam Scoring</h1>
+                <p>Medical Physics Student Entrance</p>
+            </div>
+        </div>
+        <button class="btn-back" onclick="window.history.back()">
+            <i class="fas fa-arrow-left"></i> ย้อนกลับ
+        </button>
+    </div>
+
+    <div class="container">
+        
+        <div class="main-card">
+            <div class="card-header-title">
+                <i class="fas fa-user-edit"></i> ข้อมูลผู้เข้าสอบ (Student Information)
+            </div>
+            
+            <form id="scoreForm">
+                
+                <div class="student-info-grid">
+                    <div class="input-wrapper">
+                        <label>ลำดับ</label>
+                        <input type="text" id="stdOrder" class="modern-input input-center" placeholder="-" readonly>
+                    </div>
+                    <div class="input-wrapper">
+                        <label>เลือกผู้เข้าสอบ</label>
+                        <i class="fas fa-user-graduate input-icon"></i>
+                        <select id="studentSelect" class="modern-input" required>
+                            <option value="">-- กรุณาเลือกรายชื่อ --</option>
+                        </select>
+                    </div>
+                    <div class="input-wrapper">
+                        <label>มหาวิทยาลัย</label>
+                        <i class="fas fa-university input-icon"></i>
+                        <input type="text" id="stdUni" class="modern-input" placeholder="-" readonly>
+                    </div>
+                    <div class="input-wrapper">
+                        <label>สาขา</label>
+                        <i class="fas fa-book-open input-icon"></i>
+                        <input type="text" id="stdMajor" class="modern-input" placeholder="-" readonly>
+                    </div>
+                    <input type="hidden" id="stdNameHidden">
+                </div>
+
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;">
+
+                <div class="all-subjects-container">
+                    
+                    <div class="subject-card">
+                        <div class="sub-head h-phy">Classical Mechanics</div>
+                        <div class="vertical-score-list">
+                            <div class="score-row"><label class="q-label">ข้อที่ 1</label><input type="number" id="q1" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 2</label><input type="number" id="q2" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 3</label><input type="number" id="q3" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 4</label><input type="number" id="q4" class="score-input sc-in" min="0" max="1" step="1"></div>
+                        </div>
+                    </div>
+
+                    <div class="subject-card">
+                        <div class="sub-head h-phy">Electromagnetics</div>
+                        <div class="vertical-score-list">
+                            <div class="score-row"><label class="q-label">ข้อที่ 5</label><input type="number" id="q5" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 6</label><input type="number" id="q6" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 7</label><input type="number" id="q7" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 8</label><input type="number" id="q8" class="score-input sc-in" min="0" max="1" step="1"></div>
+                        </div>
+                    </div>
+
+                    <div class="subject-card">
+                        <div class="sub-head h-phy">Quantum Mechanics</div>
+                        <div class="vertical-score-list">
+                            <div class="score-row"><label class="q-label">ข้อที่ 9</label><input type="number" id="q9" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 10</label><input type="number" id="q10" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 11</label><input type="number" id="q11" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 12</label><input type="number" id="q12" class="score-input sc-in" min="0" max="1" step="1"></div>
+                        </div>
+                    </div>
+
+                    <div class="subject-card">
+                        <div class="sub-head h-math">Calculus</div>
+                        <div class="vertical-score-list">
+                            <div class="score-row"><label class="q-label">ข้อที่ 13</label><input type="number" id="q13" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 14</label><input type="number" id="q14" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 15</label><input type="number" id="q15" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 16</label><input type="number" id="q16" class="score-input sc-in" min="0" max="1" step="1"></div>
+                        </div>
+                    </div>
+
+                    <div class="subject-card">
+                        <div class="sub-head h-math">Linear Algebra</div>
+                        <div class="vertical-score-list">
+                            <div class="score-row"><label class="q-label">ข้อที่ 17</label><input type="number" id="q17" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 18</label><input type="number" id="q18" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 19</label><input type="number" id="q19" class="score-input sc-in" min="0" max="1" step="1"></div>
+                        </div>
+                    </div>
+
+                    <div class="subject-card">
+                        <div class="sub-head h-math">Probability and statistics</div>
+                        <div class="vertical-score-list">
+                            <div class="score-row"><label class="q-label">ข้อที่ 20</label><input type="number" id="q20" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 21</label><input type="number" id="q21" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 22</label><input type="number" id="q22" class="score-input sc-in" min="0" max="1" step="1"></div>
+                        </div>
+                    </div>
+
+                    <div class="subject-card">
+                        <div class="sub-head h-rad">Ionizing radiation properties</div>
+                        <div class="vertical-score-list">
+                            <div class="score-row"><label class="q-label">ข้อที่ 23</label><input type="number" id="q23" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 24</label><input type="number" id="q24" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 25</label><input type="number" id="q25" class="score-input sc-in" min="0" max="1" step="1"></div>
+                        </div>
+                    </div>
+
+                    <div class="subject-card">
+                        <div class="sub-head h-rad">Interactions of ionizing radiation</div>
+                        <div class="vertical-score-list">
+                            <div class="score-row"><label class="q-label">ข้อที่ 26</label><input type="number" id="q26" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 27</label><input type="number" id="q27" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 28</label><input type="number" id="q28" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 29</label><input type="number" id="q29" class="score-input sc-in" min="0" max="1" step="1"></div>
+                        </div>
+                    </div>
+
+                    <div class="subject-card">
+                        <div class="sub-head h-rad">Radiation sources and X-ray production</div>
+                        <div class="vertical-score-list">
+                            <div class="score-row"><label class="q-label">ข้อที่ 30</label><input type="number" id="q30" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 31</label><input type="number" id="q31" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 32</label><input type="number" id="q32" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 33</label><input type="number" id="q33" class="score-input sc-in" min="0" max="1" step="1"></div>
+                        </div>
+                    </div>
+
+                    <div class="subject-card">
+                        <div class="sub-head h-rad">Radioactivity and radioactive decay</div>
+                        <div class="vertical-score-list">
+                            <div class="score-row"><label class="q-label">ข้อที่ 34</label><input type="number" id="q34" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 35</label><input type="number" id="q35" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 36</label><input type="number" id="q36" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 37</label><input type="number" id="q37" class="score-input sc-in" min="0" max="1" step="1"></div>
+                        </div>
+                    </div>
+
+                    <div class="subject-card">
+                        <div class="sub-head h-rad">Radiation protection</div>
+                        <div class="vertical-score-list">
+                            <div class="score-row"><label class="q-label">ข้อที่ 38</label><input type="number" id="q38" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 39</label><input type="number" id="q39" class="score-input sc-in" min="0" max="1" step="1"></div>
+                            <div class="score-row"><label class="q-label">ข้อที่ 40</label><input type="number" id="q40" class="score-input sc-in" min="0" max="1" step="1"></div>
+                        </div>
+                    </div>
+                </div> 
+
+                <div class="form-footer">
+                    <div class="total-display">
+                        คะแนนรวมทั้งหมด: <span class="total-num" id="displayTotal">0</span> / 40
+                    </div>
+                    <div class="action-buttons">
+                        <button type="button" id="btnClear" class="btn-clear">
+                            <i class="fas fa-eraser"></i> ล้างข้อมูล (Clear)
+                        </button>
+                        <button type="submit" id="btnSave" class="btn-save">
+                            <i class="fas fa-save"></i> บันทึกข้อมูล (Save)
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+    <script type="module" src="written_exam_score.js"></script>
+    </script>
+</body>
+</html>

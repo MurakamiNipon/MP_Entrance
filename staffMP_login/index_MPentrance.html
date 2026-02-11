@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MP Student Entrance</title>
+    <link rel="icon" type="image/png" href="../Img/Icon_logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <link rel="stylesheet" href="index_MPentrance.css">
+</head>
+<body>
+
+    <nav class="mobile-nav">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <span style="font-weight: 700; color: var(--primary-color);">MP Entrance</span>
+        </div>
+        <img src="../Img/logo_PSCM.png" alt="Logo" class="mobile-logo">
+    </nav>
+
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="logo-container">
+            <img src="../Img/logo_PSCM.png" alt="Logo" class="logo">
+            <div class="app-title">Medical Physics Program<br>Student Entrance</div>
+        </div>
+
+        <div class="user-profile">
+            <div class="user-avatar">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            <div class="user-info">
+                <span class="user-label">เข้าสู่ระบบโดย</span>
+                <span id="userEmailText">...</span>
+            </div>
+        </div>
+
+        <div class="logout-btn-wrapper">
+            <div id="logoutBtn" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>ออกจากระบบ</span>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header>
+            <h1>ระบบคัดเลือกผู้สมัครเข้าศึกษาต่อในหลักสูตรฟิสิกส์การแพทย์</h1>
+            <p style="color: var(--text-muted); margin-top: 5px;">จัดการข้อมูลและคะแนนสอบสำหรับเจ้าหน้าที่</p>
+        </header>
+
+        <div class="section-title">
+            <i class="fas fa-graduation-cap"></i> ระบบลงคะแนนสอบ
+        </div>
+        <div class="dashboard-grid">
+            <a href="../examination_score/written_exam_score.html" class="menu-card">
+                <div class="card-icon"><i class="fas fa-pen-alt"></i></div>
+                <div>
+                    <div class="card-title">ลงคะแนนข้อเขียน</div>
+                    <div class="card-desc">Written Examination Score</div>
+                </div>
+            </a>
+            <a href="../examination_score/english_exam_score.html" class="menu-card">
+                <div class="card-icon"><i class="fas fa-language"></i></div>
+                <div>
+                    <div class="card-title">ลงคะแนนภาษาอังกฤษ</div>
+                    <div class="card-desc">English Examination Score</div>
+                </div>
+            </a>
+            <a href="../examination_score/group_interview_score.html" class="menu-card">
+                <div class="card-icon"><i class="fas fa-users"></i></div>
+                <div>
+                    <div class="card-title">ลงคะแนนสอบสัมภาษณ์กลุ่ม</div>
+                    <div class="card-desc">Group Interview Score</div>
+                </div>
+            </a>
+            <a href="../examination_score/individual_interview_score.html" class="menu-card">
+                <div class="card-icon"><i class="fas fa-user-tie"></i></div>
+                <div>
+                    <div class="card-title">ลงคะแนนสอบสัมภาษณ์เดี่ยว</div>
+                    <div class="card-desc">Individual Interview Score</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="section-title">
+            <i class="fas fa-cogs"></i> เครื่องมือจัดการ (Admin Tools)
+        </div>
+        <div class="dashboard-grid">
+            <a href="../managestaff_MP/managestaff_MP.html" class="menu-card">
+                <div class="card-icon"><i class="fas fa-user-lock"></i></div>
+                <div>
+                    <div class="card-title">จัดการสิทธิ์เข้าถึงอาจารย์</div>
+                    <div class="card-desc">Management of Instructor</div>
+                </div>
+            </a>
+
+            <a href="../managestaff_MP/managestudent_entrance.html" class="menu-card">
+                <div class="card-icon"><i class="fas fa-user-lock"></i></div>
+                <div>
+                    <div class="card-title">จัดการรายชื่อผู้สมัครเข้าศึกษาต่อ</div>
+                    <div class="card-desc">Management of Entrance Student</div>
+                </div>
+            </a>
+
+            <a href="../tracking/group.html" class="menu-card">
+                <div class="card-icon"><i class="fas fa-user-lock"></i></div>
+                <div>
+                    <div class="card-title">ติดตามอาจารย์ลงคะแนนสัมภาษณ์กลุ่ม</div>
+                    <div class="card-desc">tracking of group Interview</div>
+                </div>
+            </a>
+
+            </a>
+            <a href="../tracking/Individual.html" class="menu-card">
+                <div class="card-icon"><i class="fas fa-user-lock"></i></div>
+                <div>
+                    <div class="card-title">ติดตามอาจารย์ลงคะแนนสัมภาษณ์เดี่ยว</div>
+                    <div class="card-desc">tracking of Individual Interview</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="section-title">
+            <i class="fas fa-chart-line"></i> รายงานผลการรับเข้า
+        </div>
+        <div class="dashboard-grid">
+            <a href="../Visualize/written_exam_report.html" class="menu-card">
+                <div class="card-icon"><i class="fas fa-file-alt"></i></div>
+                <div>
+                    <div class="card-title">รายงานผลการทดสอบ</div>
+                    <div class="card-desc">Examination Report</div>
+                </div>
+            </a>
+
+        <footer>
+        </footer>
+    </main>
+
+    <script type="module" src="index_MPentrance.js"></script>
+        
+    </script>
+</body>
+</html>

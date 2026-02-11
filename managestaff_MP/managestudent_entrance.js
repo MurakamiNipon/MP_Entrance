@@ -1,0 +1,163 @@
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, doc, setDoc, getDocs, deleteDoc } 
+        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyD5X264Dqy9QuLqcUagBFD-Y6LdxTnQaJ8",
+            authDomain: "mp-entrance.firebaseapp.com",
+            projectId: "mp-entrance",
+            storageBucket: "mp-entrance.firebasestorage.app",
+            messagingSenderId: "136386612299",
+            appId: "1:136386612299:web:6cdfc55c94c00cca8d11ce",
+            measurementId: "G-Z04M66B743"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const COLLECTION_NAME = "student";
+        async function loadData() {
+            const tableBody = document.getElementById('tableBody');
+            const emptyState = document.getElementById('emptyState');
+            const emptyMsg = document.getElementById('emptyMsg');
+            const statusIcon = document.getElementById('statusIcon');
+            const countBadge = document.getElementById('countBadge');
+
+            tableBody.innerHTML = '';
+            emptyState.style.display = 'block';
+            statusIcon.className = 'fas fa-spinner fa-spin';
+            statusIcon.style.color = '#ccc';
+            emptyMsg.innerText = 'กำลังโหลดข้อมูล...';
+            
+            try {
+                const querySnapshot = await getDocs(collection(db, COLLECTION_NAME));
+                let list = [];
+
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    data.id = doc.id; 
+                    list.push(data);
+                });
+
+                list.sort((a, b) => {
+                    return (a.order || 0) - (b.order || 0);
+                });
+
+                countBadge.innerText = `${list.length} ท่าน`;
+
+                if (list.length > 0) {
+                    emptyState.style.display = 'none';
+                    list.forEach((item) => {
+                        const tr = document.createElement('tr');
+                        
+                        const orderShow = item.order ? item.order : '-';
+
+                        tr.innerHTML = `
+                            <td style="text-align: center;"><strong>${orderShow}</strong></td>
+                            <td>${item.name}</td>
+                            <td>${item.university}</td>
+                            <td>${item.major}</td>
+                            <td>
+                                <button class="btn-del" onclick="window.deleteItem('${item.id}', '${item.name}')">
+                                    ลบ
+                                </button>
+                            </td>
+                        `;
+                        tableBody.appendChild(tr);
+                    });
+                } else {
+                    emptyState.style.display = 'block';
+                    statusIcon.className = 'fas fa-folder-open';
+                    statusIcon.style.color = '#ccc';
+                    emptyMsg.innerText = "ยังไม่มีรายชื่อผู้สอบ";
+                }
+
+            } catch (error) {
+                console.error("Load Error:", error);
+                emptyState.style.display = 'block';
+                statusIcon.className = 'fas fa-exclamation-circle';
+                statusIcon.style.color = '#dc3545';
+                emptyMsg.innerHTML = `เกิดข้อผิดพลาด: <br><span style="font-size:0.8rem">${error.message}</span>`;
+            }
+        }
+
+        document.getElementById('studentForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btnSave');
+            const oldText = btn.innerHTML;
+            
+            const name = document.getElementById('stdName').value.trim();
+            const uni = document.getElementById('stdUni').value.trim();
+            const major = document.getElementById('stdMajor').value.trim();
+
+            if(!name || !uni || !major) return;
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังบันทึก...';
+
+            try {
+                const querySnapshot = await getDocs(collection(db, COLLECTION_NAME));
+                let maxOrder = 0;
+                
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    if (data.order && typeof data.order === 'number') {
+                        if (data.order > maxOrder) {
+                            maxOrder = data.order;
+                        }
+                    }
+                });
+                const newOrder = maxOrder + 1;
+                const docRef = doc(db, COLLECTION_NAME, name);
+                
+                const payload = {
+                    order: newOrder,
+                    name: name,
+                    university: uni,
+                    major: major,
+                    createdAt: new Date().toISOString()
+                };
+
+                await setDoc(docRef, payload);
+                
+                Swal.fire({
+                    icon: 'success',
+                    title: 'บันทึกสำเร็จ',
+                    text: `ลำดับที่: ${newOrder}`,
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+                
+                document.getElementById('studentForm').reset();
+                loadData(); 
+
+            } catch (error) {
+                Swal.fire({ icon: 'error', title: 'Error', text: error.message });
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = oldText;
+            }
+        });
+
+        window.deleteItem = async function(docId, name) {
+            const result = await Swal.fire({
+                title: `ลบ ${name}?`,
+                text: 'หากลบ ลำดับของคนอื่นจะไม่เปลี่ยน',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                confirmButtonText: 'ลบ',
+                cancelButtonText: 'ยกเลิก'
+            });
+
+            if (result.isConfirmed) {
+                try {
+                    await deleteDoc(doc(db, COLLECTION_NAME, docId));
+                    loadData();
+                    Swal.fire({ icon: 'success', title: 'ลบเรียบร้อย', timer: 1000, showConfirmButton: false });
+                } catch (e) {
+                    Swal.fire('Error', e.message, 'error');
+                }
+            }
+        }
+
+        loadData();

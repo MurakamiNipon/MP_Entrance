@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Exam Score</title>
+    <link rel="icon" type="image/png" href="../Img/Icon_logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="english_exam_score.css">
+</head>
+<body>
+    <div class="top-bar">
+        <div class="brand">
+            <img src="../Img/Icon_logo.png" alt="Logo" onerror="this.style.display='none'">
+            <div class="brand-text">
+                <h1>English Exam Scoring</h1>
+                <p>Medical Physics Student Entrance</p>
+            </div>
+        </div>
+        <button class="btn-back" onclick="window.history.back()">
+            <i class="fas fa-arrow-left"></i> ย้อนกลับ
+        </button>
+    </div>
+
+    <div class="container">
+        <div class="main-card">
+            <div class="card-header-title">
+                <i class="fas fa-user-edit"></i> ข้อมูลผู้เข้าสอบ (Student Information)
+            </div>
+            <form id="scoreForm">
+                <div class="student-info-grid">
+                    <div class="input-wrapper">
+                        <label>ลำดับ</label>
+                        <input type="text" id="stdOrder" class="modern-input input-center" placeholder="-" readonly>
+                    </div>
+                    <div class="input-wrapper">
+                        <label>เลือกผู้เข้าสอบ</label>
+                        <i class="fas fa-user-graduate input-icon"></i>
+                        <select id="studentSelect" class="modern-input" required>
+                            <option value="">-- กรุณาเลือกรายชื่อ --</option>
+                        </select>
+                    </div>
+                    <div class="input-wrapper">
+                        <label>มหาวิทยาลัย</label>
+                        <i class="fas fa-university input-icon"></i>
+                        <input type="text" id="stdUni" class="modern-input" placeholder="-" readonly>
+                    </div>
+                    <div class="input-wrapper">
+                        <label>สาขา</label>
+                        <i class="fas fa-book-open input-icon"></i>
+                        <input type="text" id="stdMajor" class="modern-input" placeholder="-" readonly>
+                    </div>
+                    <input type="hidden" id="stdNameHidden">
+                </div>
+
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;">
+
+                <div class="english-score-container">
+                    <div class="subject-card">
+                        <div class="sub-head h-eng">
+                            <i class="fas fa-language"></i> English Proficiency Score
+                        </div>
+                        <div class="vertical-score-list">
+                            <div class="score-row">
+                                <label class="q-label">
+                                    <i class="fas fa-book-reader"></i> Reading Score
+                                </label>
+                                <input type="number" id="readingScore" class="score-input sc-in" min="0" max="100" step="any" placeholder="0">
+                            </div>
+                            <div class="score-row">
+                                <label class="q-label">
+                                    <i class="fas fa-pen-nib"></i> Writing Score
+                                </label>
+                                <input type="number" id="writingScore" class="score-input sc-in" min="0" max="100" step="any" placeholder="0">
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+
+                <div class="form-footer">
+                    <div class="total-display">
+                        คะแนนรวมทั้งหมด: <span class="total-num" id="displayTotal">0.00</span>
+                    </div>
+                    <div class="action-buttons">
+                        <button type="button" id="btnClear" class="btn-clear">
+                            <i class="fas fa-eraser"></i> ล้างข้อมูล (Clear)
+                        </button>
+                        <button type="submit" id="btnSave" class="btn-save">
+                            <i class="fas fa-save"></i> บันทึกข้อมูล (Save)
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script type="module" src="english_exam_score.js"></script>
+</body>
+</html>

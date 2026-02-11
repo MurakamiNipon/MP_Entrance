@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Individual Assessment</title>
+    <link rel="icon" type="image/png" href="../Img/Icon_logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="individual_interview_score.css">
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="brand">
+            <img src="../Img/Icon_logo.png" alt="Logo" onerror="this.style.display='none'">
+            <div class="brand-text">
+                <h1>Individual Interview Score</h1>
+                <p>Medical Physics Student Entrance</p>
+            </div>
+        </div>
+        <button class="btn-back" onclick="window.history.back()">
+            <i class="fas fa-arrow-left"></i> <span style="display:none;">ย้อนกลับ</span>
+        </button>
+    </div>
+
+    <div class="container">
+        <div class="main-card">
+            <div class="card-header-title">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-user-tie"></i> ตารางประเมินสัมภาษณ์เดี่ยว
+                </div>
+                <div class="instructor-badge">
+                    <i class="fas fa-user-circle"></i> <span id="instructorNameDisplay">Loading...</span>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="col-order">ลำดับ</th>
+                            <th style="text-align: left; padding-left: 15px;">ชื่อ - สกุล / สาขา</th>
+                            <th class="col-decision">ผลการพิจารณา (Decision)</th>
+                            <th class="col-action">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentTableBody">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="individual_interview_score.js"></script>
+        
+    </script>
+</body>
+</html>

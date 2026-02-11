@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Assessment Track</title>
+    <link rel="icon" type="image/png" href="../Img/Icon_logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="group.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1><i class="fas fa-chart-pie"></i> ติดตามสถานะการลงคะแนนสัมภาษณ์กลุ่ม</h1>
+                <p style="color: #666; margin: 5px 0 0 0;">Medical Physics Student Entrance for Group Interview</p>
+            </div>
+            
+            <div class="header-actions">
+                <button class="btn-back" onclick="window.history.back()">
+                    <i class="fas fa-arrow-left"></i> ย้อนกลับ
+                </button>
+                <button class="refresh-btn" onclick="location.reload()">
+                    <i class="fas fa-sync-alt"></i> Refresh Data
+                </button>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-val" id="totalStudents">0</div>
+                <div class="stat-label">จำนวนผู้เข้าสอบทั้งหมด</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="totalInstructors">0</div>
+                <div class="stat-label">จำนวนอาจารย์ (Staff)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="completeCount" style="color: var(--success);">0</div>
+                <div class="stat-label">ลงคะแนนครบแล้ว (ท่าน)</div>
+            </div>
+        </div>
+
+        <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 50px;">ลำดับ</th>
+                        <th>ชื่ออาจารย์ผู้สอบสัมภาษณ์</th>
+                        <th>ความคืบหน้า (Progress)</th>
+                        <th>สถานะ</th>
+                    </tr>
+                </thead>
+                <tbody id="trackingTable">
+                    <tr><td colspan="4" style="text-align:center; padding: 30px;">Loading data...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script type="module" src="group.js"></script>
+        
+    </script>
+</body>
+</html>

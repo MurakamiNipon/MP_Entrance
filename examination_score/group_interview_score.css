@@ -1,0 +1,152 @@
+:root {
+            --primary: #003399;
+            --secondary: #D4812C;
+            --bg-body: #f4f6f9;
+            --white: #ffffff;
+            --text-dark: #2c3e50;
+            --text-light: #6c757d;
+            --header-bg: #00695c; 
+            --header-text: #ffffff;
+            --row-hover: #e0f2f1;
+            --row-locked: #fafafa;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-dark);
+            padding-bottom: 80px;
+        }
+
+        .top-bar {
+            background: var(--white);
+            padding: 10px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 1000;
+        }
+        .brand { display: flex; align-items: center; gap: 10px; }
+        .brand img { height: 35px; }
+        .brand-text h1 { font-size: 1.1rem; font-weight: 700; color: var(--primary); margin: 0; }
+        .brand-text p { font-size: 0.8rem; color: var(--text-light); margin: 0; display: block; }
+
+        .btn-back {
+            background: #f8f9fa; color: var(--text-dark); border: 1px solid #dee2e6;
+            padding: 6px 15px; font-size: 0.9rem; border-radius: 30px; cursor: pointer;
+            font-family: 'Sarabun', sans-serif; display: flex; align-items: center; gap: 5px;
+            transition: all 0.2s; white-space: nowrap;
+        }
+
+        .container { width: 100%; max-width: 1600px; margin: 15px auto; padding: 0 10px; }
+
+        .main-card {
+            background: var(--white); border-radius: 12px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05); padding: 20px; 
+            border: 1px solid #eef2f6;
+        }
+        
+        .card-header-title {
+            font-size: 1.1rem; font-weight: 700; color: var(--header-bg);
+            margin-bottom: 15px; display: flex; flex-wrap: wrap; gap: 10px;
+            align-items: center; justify-content: space-between;
+            padding-bottom: 15px; border-bottom: 2px solid #f0f0f0;
+        }
+
+        .instructor-badge {
+            font-size: 0.85rem; background: #e0f2f1; color: #00695c; 
+            padding: 5px 12px; border-radius: 20px; border: 1px solid #b2dfdb;
+            display: inline-flex; align-items: center; gap: 5px;
+        }
+
+        .table-container { border-radius: 8px; border: 1px solid #dee2e6; background: #fff; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 1000px; }
+        
+        thead th {
+            background-color: var(--header-bg); 
+            color: var(--header-text) !important;
+            padding: 12px 5px; font-weight: 600; text-align: center; white-space: nowrap;
+            position: sticky; top: 0; z-index: 10; font-size: 0.95rem;
+            vertical-align: top;
+        }
+        
+        thead th span { color: var(--header-text) !important; }
+
+        .th-info { display: block; font-size: 0.75rem; font-weight: 300; opacity: 0.9; margin-top: 5px; }
+
+        tbody tr { border-bottom: 1px solid #eee; }
+        tbody tr:hover { background-color: var(--row-hover); }
+        tbody tr.row-saved { background-color: var(--row-locked); }
+        
+        td { padding: 15px 5px; vertical-align: middle; font-size: 0.95rem; }
+
+        .col-order { text-align: center; font-weight: bold; width: 50px; }
+        tbody .col-order { color: var(--primary); }
+
+        .col-info { width: 250px; padding-left: 10px; }
+        .student-name { font-weight: 700; color: #2c3e50; display: block; margin-bottom: 4px; }
+        .student-meta { display: flex; flex-direction: column; gap: 2px; font-size: 0.8rem; color: #666; }
+        
+        .col-score { width: 110px; text-align: center; }
+
+        .score-input {
+            width: 50px; text-align: center;
+            border: 1px solid #ced4da; border-radius: 6px; padding: 6px 2px;
+            font-size: 1rem; font-weight: 600; color: #333;
+            background: #fdfdfd; appearance: none; -webkit-appearance: none; margin: 0 auto; display: block;
+        }
+        .score-input:focus { border-color: var(--header-bg); outline: none; background: #e0f7fa; box-shadow: 0 0 0 3px rgba(0, 105, 92, 0.1); }
+        .score-input:disabled { background-color: #e9ecef; color: #6c757d; }
+        
+        
+        .col-total { width: 80px; text-align: center; }
+        tbody .col-total span.row-total { font-weight: 800; color: var(--secondary); font-size: 1.1rem; }
+
+        .col-action { width: 100px; text-align: center; }
+        .btn-icon {
+            border: none; border-radius: 6px; 
+            padding: 6px 10px; 
+            font-size: 0.85rem; 
+            cursor: pointer;
+            font-family: 'Sarabun', sans-serif; font-weight: 600;
+            display: inline-flex; align-items: center; gap: 4px;
+        }
+        .btn-row-save { background-color: #00695c; color: white; }
+        .btn-row-edit { background-color: #fff; color: #d32f2f; border: 1px solid #ef9a9a; }
+        .btn-icon:disabled { opacity: 0.7; cursor: not-allowed; }
+
+        @media (max-width: 992px) {
+            .brand-text p { display: none; }
+            .main-card { padding: 10px; border: none; background: transparent; box-shadow: none; }
+            .table-container { border: none; background: transparent; overflow-x: visible; }
+            table { width: 100%; min-width: auto; }
+            thead { display: none; }
+            tbody tr {
+                display: block; background: #fff; border-radius: 12px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 15px;
+                padding: 15px; border: 1px solid #eef2f6; position: relative;
+            }
+            td { display: block; padding: 5px 0; text-align: left; border: none; }
+            .col-order { 
+                position: absolute; top: 15px; left: 15px; 
+                background: var(--primary); color: white !important;
+                width: 25px; height: 25px; border-radius: 50%; 
+                line-height: 25px; font-size: 0.8rem;
+            }
+            .col-info { padding-left: 35px; padding-bottom: 15px; border-bottom: 1px dashed #eee; margin-bottom: 10px; width: 100%; }
+            .student-name { font-size: 1.1rem; margin-bottom: 5px; }
+            .col-score { display: inline-block; width: 32%; text-align: center; margin-bottom: 10px; }
+            .col-score::before { display: block; font-size: 0.7rem; color: #666; margin-bottom: 3px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            td.col-score:nth-of-type(3)::before { content: "ทำงานเป็นทีม"; }
+            td.col-score:nth-of-type(4)::before { content: "ความชัดเจนในการสื่อสาร"; }
+            td.col-score:nth-of-type(5)::before { content: "การคิดเชิงระบบและความปลอดภัย"; }
+            td.col-score:nth-of-type(6)::before { content: "การตอบคำถามและเหตุผลสนับสนุน"; }
+            td.col-score:nth-of-type(7)::before { content: "ทัศนคติ"; }
+            .score-input { width: 90%; height: 40px; font-size: 1.1rem; }
+            .col-total { display: inline-block; width: 32%; text-align: center; vertical-align: top; }
+            .col-total::before { content: "รวม (25)"; display: block; font-size: 0.7rem; color: var(--secondary); font-weight: 700; margin-bottom: 3px;}
+            tbody .col-total span.row-total { font-size: 1.4rem; line-height: 40px; }
+            .col-action { width: 100%; margin-top: 10px; padding-top: 10px; border-top: 1px solid #f0f0f0; }
+            .btn-icon { width: 100%; justify-content: center; padding: 10px; font-size: 1rem; }
+}

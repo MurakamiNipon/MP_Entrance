@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>จัดการผู้มีสิทธิ์สอบ (Student Entrance)</title>
+    <link rel="icon" type="image/png" href="../Img/Icon_logo.png"> 
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="managestudent_entrance.css">
+</head>
+<body>
+
+    <div class="header-bar">
+        <h1>ระบบจัดการรายชื่อผู้มีสิทธิ์สอบ (Student Entrance)</h1>
+    </div>
+
+    <div class="container">
+        
+        <div class="card">
+            <div class="section-title">
+                <span><i class="fas fa-user-graduate"></i> เพิ่มรายชื่อผู้สอบ</span>
+            </div>
+
+            <form id="studentForm">
+                <div class="input-grid">
+                    <div class="form-group full-width">
+                        <label>ชื่อ-นามสกุล (Name)</label>
+                        <input type="text" id="stdName" class="form-control" placeholder="Name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>มหาวิทยาลัย (University)</label>
+                        <input type="text" id="stdUni" class="form-control" placeholder="University" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>สาขา (Major)</label>
+                        <input type="text" id="stdMajor" class="form-control" placeholder="Major" required>
+                    </div>
+                    
+                    <button type="submit" class="btn-save" id="btnSave">
+                        <i class="fas fa-save"></i> บันทึกข้อมูล
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="card">
+            <div class="section-title">
+                <span><i class="fas fa-list-ol"></i> รายชื่อผู้มีสิทธิ์สอบ</span>
+                <span style="font-size: 0.9rem; color: #666;" id="countBadge">0 ท่าน</span>
+            </div>
+
+            <div class="table-responsive">
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th style="width: 60px; text-align: center;">ลำดับ</th>
+                            <th>ชื่อ-นามสกุล</th>
+                            <th>มหาวิทยาลัย</th>
+                            <th>สาขา</th>
+                            <th style="width: 80px;">จัดการ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+                
+                <div id="emptyState" class="empty-state">
+                    <i id="statusIcon" class="fas fa-spinner fa-spin"></i>
+                    <p id="emptyMsg">กำลังโหลดข้อมูล...</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <button class="btn-back" onclick="window.history.back()">
+                <i class="fas fa-chevron-left"></i> ย้อนกลับ
+            </button>
+        </div>
+    </div>
+
+    <script type="module" src="managestudent_entrance.js"></script>
+        
+    </script>
+</body>
+</html>
