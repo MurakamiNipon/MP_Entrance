@@ -139,9 +139,9 @@
             .col-score { display: inline-block; width: 32%; text-align: center; margin-bottom: 10px; }
             .col-score::before { display: block; font-size: 0.7rem; color: #666; margin-bottom: 3px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
             td.col-score:nth-of-type(3)::before { content: "ทำงานเป็นทีม"; }
-            td.col-score:nth-of-type(4)::before { content: "ความชัดเจนในการสื่อสาร"; }
-            td.col-score:nth-of-type(5)::before { content: "การคิดเชิงระบบและความปลอดภัย"; }
-            td.col-score:nth-of-type(6)::before { content: "การตอบคำถามและเหตุผลสนับสนุน"; }
+            td.col-score:nth-of-type(4)::before { content: "การสื่อสาร"; }
+            td.col-score:nth-of-type(5)::before { content: "การคิดเชิงระบบ"; }
+            td.col-score:nth-of-type(6)::before { content: "การตอบคำถาม"; }
             td.col-score:nth-of-type(7)::before { content: "ทัศนคติ"; }
             .score-input { width: 90%; height: 40px; font-size: 1.1rem; }
             .col-total { display: inline-block; width: 32%; text-align: center; vertical-align: top; }
