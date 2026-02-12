@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, setDoc, doc, getDocs, getDoc, serverTimestamp } 
+import { getFirestore, collection, setDoc, doc, getDocs, getDoc, updateDoc, serverTimestamp } 
 from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -17,20 +17,13 @@ const db = getFirestore(app);
 
 const COLLECTION_NAME = "written_exam"; 
 const STUDENT_COLLECTION = "student";
-
 let allStudents = [];
 
 async function loadStudents() {
     const selectEl = document.getElementById('studentSelect');
     try {
         const stdSnapshot = await getDocs(collection(db, STUDENT_COLLECTION));
-        const examSnapshot = await getDocs(collection(db, COLLECTION_NAME));
-        const gradedNames = new Set();
         
-        examSnapshot.forEach(doc => {
-            gradedNames.add(doc.id); 
-        });
-
         allStudents = [];
         stdSnapshot.forEach((doc) => {
             const data = doc.data();
@@ -39,7 +32,8 @@ async function loadStudents() {
                 order: data.order,
                 name: data.name,
                 university: data.university,
-                major: data.major
+                major: data.major,
+                hasScore: data.hasScore || false 
             });
         });
 
@@ -51,7 +45,8 @@ async function loadStudents() {
             const opt = document.createElement('option');
             opt.value = st.id;
             opt.text = st.name; 
-            if (gradedNames.has(st.name)) {
+            
+            if (st.hasScore) {
                 opt.style.color = 'red';
                 opt.style.fontWeight = 'bold';
             } else {
@@ -192,6 +187,11 @@ document.getElementById('scoreForm').addEventListener('submit', async (e) => {
 
         await setDoc(docRef, data);
 
+        const studentRef = doc(db, STUDENT_COLLECTION, studentId);
+        await updateDoc(studentRef, {
+            hasScore: true
+        });
+
         Swal.fire({ 
             icon: 'success', 
             title: 'บันทึกสำเร็จ!', 
@@ -205,6 +205,9 @@ document.getElementById('scoreForm').addEventListener('submit', async (e) => {
         if (selectedOption) {
             selectedOption.style.color = 'red';
             selectedOption.style.fontWeight = 'bold';
+            
+            const stInArray = allStudents.find(s => s.id === studentId);
+            if(stInArray) stInArray.hasScore = true;
         }
 
         document.getElementById('scoreForm').reset();
