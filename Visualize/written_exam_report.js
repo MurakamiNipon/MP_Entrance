@@ -15,9 +15,22 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const ALLOWED_ADMINS = [
-    "nipon.saiw@cra.ac.th",
+    "chanatinat.cho@cra.ac.th",
+    "chirapha.tan@cra.ac.th",
     "chirasak.kha@cra.ac.th",
-    "thiansin.lia@cra.ac.th"
+    "danupon.nan@cra.ac.th",
+    "kunlanan.pup@cra.ac.th",
+    "napat.sri@cra.ac.th",
+    "nipon.saiw@cra.ac.th",
+    "pasit.jar@cra.ac.th",
+    "sangutid.tho@cra.ac.th",
+    "sasikarn.cha@cra.ac.th",
+    "sukanya.thi@cra.ac.th",
+    "supawan.usi@cra.ac.th",
+    "thiansin.lia@cra.ac.th",
+    "thunpisit.mun@cra.ac.th",
+    "todsaporn.fua@cra.ac.th",
+    "wilai.mas@cra.ac.th",
 ];
 
 const WRITTEN_COLLECTION = "written_exam";
